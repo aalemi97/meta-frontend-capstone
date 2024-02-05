@@ -11,12 +11,13 @@ function Main() {
         <button>Online Menu</button>
       </div>
       <div className="items">
-        {items.map((item) => (
+        {items.map((item, index) => (
           <HighlightedItem
             title={item.title}
             imageSource={item.image}
             description={item.description}
             price={item.price}
+            key={index}
           />
         ))}
       </div>

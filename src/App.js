@@ -10,7 +10,6 @@ function App() {
       <NavigationBar />
       <Header />
       <Main />
-      <Footer />
     </>
   );
 }
