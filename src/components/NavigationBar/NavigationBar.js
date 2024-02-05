@@ -5,14 +5,15 @@ import menuIcon from "../../assets/menu-icon.svg";
 import closeIcon from "../../assets/xmark.circle.svg";
 import grayLogo from "../../assets/little-lemon-logo-grey.png";
 import { useEffect, useState } from "react";
+import { HomePage } from "../HomePage";
 
 const navItems = [
-  { title: "Home", ref: "/" },
-  { title: "About", ref: "/about" },
-  { title: "Menu", ref: "/menu" },
-  { title: "Reservation", ref: "/reservation" },
-  { title: "Order Online", ref: "/order-online" },
-  { title: "Login", ref: "/login" },
+  { title: "Home", ref: "/", element: <HomePage /> },
+  { title: "About", ref: "/about", element: null },
+  { title: "Menu", ref: "/menu", element: null },
+  { title: "Reservation", ref: "/reservation", element: null },
+  { title: "Order Online", ref: "/order-online", element: null },
+  { title: "Login", ref: "/login", element: null },
 ];
 
 function NavigationBar() {
@@ -46,7 +47,7 @@ function NavigationBar() {
       )}
       <Routes>
         {navItems.map((item, index) => (
-          <Route path={item.ref} element={null} key={index} />
+          <Route path={item.ref} element={item.element} key={index} />
         ))}
       </Routes>
     </>
