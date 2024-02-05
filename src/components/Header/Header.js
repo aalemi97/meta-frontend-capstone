@@ -1,0 +1,24 @@
+import React from "react";
+import "./index.css";
+import imageSource from "../../assets/restauranfood.jpg";
+
+function Header() {
+  return (
+    <header className="container">
+      <div className="header-title">
+        <div className="info">
+          <h2>Little Lemons</h2>
+          <h3>Chicago</h3>
+          <p>
+            We are a family owned Mediterranean restaurant, focused on
+            traditional recipes served with a modern twist.
+          </p>
+          <button>Reserve a Table</button>
+        </div>
+        <img src={imageSource} alt="Header" />
+      </div>
+    </header>
+  );
+}
+
+export default Header;

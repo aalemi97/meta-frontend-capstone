@@ -1,0 +1,36 @@
+nav.container {
+  display: grid;
+  grid-template-columns: 2fr 6fr;
+  align-items: center;
+  margin-left: max(5%, 10px);
+  margin-right: max(5%, 10px);
+  height: 80px;
+}
+
+nav .nav-box {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  height: 56.4px;
+  align-items: center;
+}
+
+nav .logo {
+  width: 150px;
+  height: 56.4px;
+  align-content: center;
+}
+
+nav img {
+  width: 150px;
+  height: 56.4px;
+  padding-top: -10px;
+}
+
+nav a {
+  padding-left: 10px;
+  text-align: center;
+  color: #495e57;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 15px;
+}

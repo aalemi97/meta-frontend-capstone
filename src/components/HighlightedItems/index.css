@@ -1,0 +1,44 @@
+.card-container {
+  background-color: #edefee;
+  border-radius: 16px 16px 0px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-container img {
+  border-radius: 16px 16px 0px 0px;
+  width: 100%;
+  height: 30%;
+  object-fit: cover;
+  mask-border: initial;
+}
+
+.card-container .detail {
+  display: flex;
+  flex-direction: row;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.detail h3 {
+  width: 80%;
+  content: #333333;
+}
+
+.detail h4 {
+  color: #ee9972;
+}
+
+.description {
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 50%;
+}
+
+.description p {
+  text-align: justify;
+}
+
+.card-container > h4 {
+  padding: 10px;
+}

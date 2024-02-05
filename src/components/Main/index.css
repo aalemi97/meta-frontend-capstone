@@ -1,0 +1,30 @@
+main.container {
+  height: 720px;
+}
+
+main .title {
+  margin-left: max(15%, 10px);
+  margin-right: max(15%, 10px);
+  display: grid;
+  grid-template-columns: 8fr 1fr;
+}
+
+main .items {
+  margin-left: max(15%, 10px);
+  margin-right: max(15%, 10px);
+  display: grid;
+  grid-template-columns: 3fr 3fr 3fr;
+  column-gap: 20px;
+  height: 87%;
+}
+
+.title button {
+  width: 200px;
+  height: 60px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 16px;
+  background-color: #f4ce14;
+  border-color: #f4ce14;
+  color: #333333;
+}
