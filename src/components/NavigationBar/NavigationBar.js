@@ -4,14 +4,15 @@ import logo from "../../assets/Logo.svg";
 import menuIcon from "../../assets/menu-icon.svg";
 import closeIcon from "../../assets/xmark.circle.svg";
 import grayLogo from "../../assets/little-lemon-logo-grey.png";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { HomePage } from "../HomePage";
+import { ReservationPage } from "../Reservation/ReservationPage";
 
 const navItems = [
   { title: "Home", ref: "/", element: <HomePage /> },
   { title: "About", ref: "/about", element: null },
   { title: "Menu", ref: "/menu", element: null },
-  { title: "Reservation", ref: "/reservation", element: null },
+  { title: "Reservation", ref: "/reservation", element: <ReservationPage /> },
   { title: "Order Online", ref: "/order-online", element: null },
   { title: "Login", ref: "/login", element: null },
 ];
