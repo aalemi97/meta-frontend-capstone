@@ -1,6 +1,29 @@
+import { useReducer } from "react";
 import { ReservationForm } from "./ReservationForm";
 import "./index.css";
 
-export const ReservationPage = (props) => {
-  return <ReservationForm />;
+function updateTimes(state, slot) {
+  return initializeTimes();
+}
+function initializeTimes() {
+  const currentTime = new Date().getHours() + 1;
+  let length;
+  if (currentTime < 10) {
+    length = 14;
+  } else {
+    length = 23 - currentTime + 1;
+  }
+  return Array.from({ length: length }, (value, index) => index).map(
+    (value) => `${value + currentTime}:00`
+  );
+}
+
+export const ReservationPage = () => {
+  const [availableTimes, dispatch] = useReducer(updateTimes, initializeTimes());
+  return (
+    <ReservationForm
+      availableTimes={availableTimes}
+      onSlotSelection={(time) => dispatch(time)}
+    />
+  );
 };

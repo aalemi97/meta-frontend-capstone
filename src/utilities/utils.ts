@@ -11,13 +11,7 @@ export const validateDateInput = (date: string) => {
   now.setHours(now.getHours() - 1);
   const max = new Date();
   max.setDate(max.getDate() + 8);
-  const isValid = new Date(date + "T23:59:59") >= now && new Date(date + "T23:59:59") < max;
+  const isValid =
+    new Date(date + "T23:59:59") >= now && new Date(date + "T23:59:59") < max;
   return isValid;
-}
-
-export const validateTimeInput = (time: string) => {
-  const now = new Date().getHours() + 1;
-  const selectedTime = parseInt(time.split(":")[0]);
-  const isValid = selectedTime >= 9 && selectedTime >= now && selectedTime <= 23;
-  return isValid;
-}
+};

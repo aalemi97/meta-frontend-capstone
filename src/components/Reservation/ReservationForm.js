@@ -3,15 +3,13 @@ import { InputField } from "./InputField";
 import {
   validateEmailInput,
   validateDateInput,
-  validateTimeInput,
 } from "../../utilities/utils.ts";
 import "./index.css";
 
-export const ReservationForm = (props) => {
+export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
   const [isNameValid, setIsNameValid] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isDateValid, setIsDateValid] = useState(false);
-  const [isTimeValid, setIsTimeValid] = useState(false);
   const [isSizeValid, setIsSizeValid] = useState(false);
   const validateName = (name) => {
     const isValid = name.length >= 3;
@@ -28,15 +26,14 @@ export const ReservationForm = (props) => {
     setIsDateValid(isValid);
     return isValid;
   };
-  const validateTime = (time) => {
-    const isValid = validateTimeInput(time);
-    setIsTimeValid(isValid);
-    return isValid;
-  };
   const validateSize = (size) => {
     const isValid = size >= 1 && size <= 10;
     setIsSizeValid(isValid);
     return isValid;
+  };
+  const onSelectTime = (time) => {
+    onSlotSelection(time);
+    return true;
   };
   return (
     <form className="container">
@@ -82,12 +79,16 @@ export const ReservationForm = (props) => {
         inputID={"time"}
         text={"Time"}
         required={true}
-        error={
-          "Please enter a valid time! We can reserve a table for the next hours."
-        }
-        validate={validateTime}
+        error={"Please select an available time slot!"}
+        validate={onSelectTime}
       >
-        <input id="time" type="time" />
+        <select id="time">
+          {availableTimes.map((time) => (
+            <option key={time} value={time}>
+              {time}
+            </option>
+          ))}
+        </select>
       </InputField>
       <InputField
         inputID={"guests"}
@@ -124,15 +125,7 @@ export const ReservationForm = (props) => {
       </InputField>
       <button
         type="submit"
-        disabled={
-          !(
-            isNameValid &&
-            isEmailValid &&
-            isDateValid &&
-            isTimeValid &&
-            isSizeValid
-          )
-        }
+        disabled={!(isNameValid && isEmailValid && isDateValid && isSizeValid)}
       >
         Submit
       </button>
