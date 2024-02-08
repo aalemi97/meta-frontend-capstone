@@ -2,10 +2,10 @@ import { useReducer } from "react";
 import { ReservationForm } from "./ReservationForm";
 import "./index.css";
 
-function updateTimes(state, slot) {
-  return initializeTimes();
+export function updateTimes(state, slot) {
+  return state;
 }
-function initializeTimes() {
+export function initializeTimes() {
   const currentTime = new Date().getHours() + 1;
   let length;
   if (currentTime < 10) {
