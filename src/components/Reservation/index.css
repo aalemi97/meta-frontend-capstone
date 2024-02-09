@@ -1,0 +1,93 @@
+@media (max-width: 480px) {
+  form.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    margin: 20px;
+    gap: 25px;
+  }
+  .input-field {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    gap: 10px;
+  }
+  .error {
+    color: #ee9972;
+    text-align: left;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
+}
+
+@media (min-width: 481px) {
+  form.container {
+    display: grid;
+    width: max(480px, 80%);
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    gap: 25px;
+  }
+  .input-field {
+    display: grid;
+    grid-template-columns: 3fr 5fr;
+    grid-template-rows: auto;
+    align-items: center;
+  }
+  .error {
+    color: #ee9972;
+    text-align: left;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+}
+
+h2 {
+  color: #333333;
+}
+
+input,
+select {
+  height: 30px;
+  font-size: 20px;
+  padding: 10px;
+  color: #495e57;
+  border-radius: 16px;
+  border-color: #495e57;
+  border-width: 2px;
+  border-style: solid;
+}
+
+#message {
+  height: 100px;
+}
+
+label {
+  font-size: 20px;
+  color: #495e57;
+}
+
+sup {
+  color: #ee9972;
+}
+
+button {
+  height: 60px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 16px;
+  background-color: #f4ce14;
+  border-color: #f4ce14;
+  color: #333333;
+  border-style: solid;
+}
+
+button:disabled {
+  background-color: #495e57;
+  border-color: #495e57;
+  color: #f4ce14;
+}

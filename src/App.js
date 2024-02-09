@@ -1,7 +1,13 @@
 import "./App.css";
+import NavigationBar from "./components/NavigationBar/NavigationBar";
+import Footer from "./components/Footer/Footer";
 
 function App() {
-  return <div className="App">Home Page</div>;
+  return (
+    <>
+      <NavigationBar />
+    </>
+  );
 }
 
 export default App;

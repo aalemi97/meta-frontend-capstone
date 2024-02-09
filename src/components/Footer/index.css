@@ -1,0 +1,13 @@
+footer.container {
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #f4ce14;
+  margin-bottom: 0px;
+}
+
+footer h5 {
+  color: #495e57;
+}
