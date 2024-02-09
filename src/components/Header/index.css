@@ -65,7 +65,7 @@
     background-color: #495e57;
     height: 70%;
     display: grid;
-    grid-template-columns: 6fr 3fr;
+    grid-template-columns: 4fr 1fr;
   }
 
   header .info {
@@ -101,6 +101,7 @@
   }
 
   header img {
+    background-color: #f4ce14;
     height: 300px;
     /* width: 260px; */
     border-radius: 16px;
