@@ -1,8 +1,13 @@
 import React from "react";
 import "./index.css";
 import imageSource from "../../assets/restauranfood.jpg";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/reservation");
+  };
   return (
     <header className="container">
       <div className="header-title">
@@ -13,7 +18,7 @@ function Header() {
             We are a family owned Mediterranean restaurant, focused on
             traditional recipes served with a modern twist.
           </p>
-          <button>Reserve a Table</button>
+          <button onClick={handleClick}>Reserve a Table</button>
         </div>
         <img src={imageSource} alt="Header" />
       </div>
