@@ -28,14 +28,14 @@ interface Action {
   value: string;
 }
 
-export function createInitialState(): State {
+export function createInitialState(value: any): State {
   return {
     name: { value: "", valid: false, touched: false },
     email: { value: "", valid: false, touched: false },
     date: { value: "", valid: false, touched: false },
-    time: { value: "", valid: false, touched: false },
+    time: { value: value ? value : "", valid: false, touched: false },
     size: { value: 0, valid: false, touched: false },
-    occasion: { value: "", valid: false, touched: false },
+    occasion: { value: "general", valid: false, touched: false },
     message: { value: "", valid: false, touched: false },
   };
 }
@@ -101,6 +101,6 @@ export function reducer(state: State, action: Action): State {
         [action.value]: { ...state[action.value], touched: true },
       };
     case "reset":
-      return createInitialState();
+      return createInitialState(action.value);
   }
 }

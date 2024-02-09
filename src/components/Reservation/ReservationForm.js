@@ -4,10 +4,14 @@ import { createInitialState, reducer } from "./FormData.ts";
 import "./index.css";
 
 export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
-  const [state, dispatch] = useReducer(reducer, createInitialState());
+  const [state, dispatch] = useReducer(reducer, createInitialState(null));
   function handleSubmit(event) {
     event.preventDefault();
-    dispatch({ type: "reset", object: null });
+    onSlotSelection(state.time.value);
+    dispatch({
+      type: "reset",
+      value: availableTimes[0],
+    });
   }
   return (
     <form className="container" onSubmit={handleSubmit}>
@@ -80,6 +84,7 @@ export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
       >
         <select
           id="time"
+          value={state.time.value}
           onChange={(event) => {
             dispatch({ type: "set_time", value: event.target.value });
           }}
@@ -121,6 +126,7 @@ export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
       >
         <select
           id="occasion"
+          value={state.occasion.value}
           onChange={(event) => {
             dispatch({ type: "set_occasion", value: event.target.value });
           }}

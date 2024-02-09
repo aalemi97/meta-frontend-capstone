@@ -3,6 +3,8 @@ import { ReservationForm } from "./ReservationForm";
 import "./index.css";
 
 export function updateTimes(state, slot) {
+  const index = state.indexOf(slot);
+  state.splice(index, 1);
   return state;
 }
 export function initializeTimes() {
