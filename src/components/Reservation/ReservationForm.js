@@ -1,42 +1,148 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import { InputField } from "./InputField";
+import { createInitialState, reducer } from "./FormData.ts";
 import {
-  validateEmailInput,
-  validateDateInput,
+  validateName,
+  validateEmail,
+  validateDate,
+  validateSize,
 } from "../../utilities/utils.ts";
 import "./index.css";
 
 export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
-  const [isNameValid, setIsNameValid] = useState(false);
-  const [isEmailValid, setIsEmailValid] = useState(false);
-  const [isDateValid, setIsDateValid] = useState(false);
-  const [isSizeValid, setIsSizeValid] = useState(false);
-  const validateName = (name) => {
-    const isValid = name.length >= 3;
-    setIsNameValid(isValid);
-    return isValid;
+  const [state, dispatch] = useReducer(reducer, createInitialState());
+
+  const onChangeName = (event) => {
+    const value = event.target.value;
+    dispatch({
+      type: "set_name",
+      object: {
+        ...state.name,
+        value: value,
+        valid: validateName(value),
+      },
+    });
   };
-  function validateEmail(email) {
-    const isValid = validateEmailInput(email);
-    setIsEmailValid(isValid);
-    return isValid;
+
+  const onBlurName = () => {
+    dispatch({
+      type: "set_name",
+      object: {
+        ...state.name,
+        touched: true,
+      },
+    });
+  };
+
+  const onChangeEmail = (event) => {
+    const value = event.target.value;
+    dispatch({
+      type: "set_email",
+      object: {
+        ...state.email,
+        value: value,
+        valid: validateEmail(value),
+      },
+    });
+  };
+
+  const onBlurEmail = () => {
+    dispatch({
+      type: "set_email",
+      object: {
+        ...state.email,
+        touched: true,
+      },
+    });
+  };
+
+  const onChangeDate = (event) => {
+    const value = event.target.value;
+    dispatch({
+      type: "set_date",
+      object: {
+        ...state.date,
+        value: value,
+        valid: validateDate(value),
+      },
+    });
+  };
+
+  const onBlurDate = () => {
+    dispatch({
+      type: "set_date",
+      object: {
+        ...state.date,
+        touched: true,
+      },
+    });
+  };
+
+  const onChangeTime = (event) => {
+    const value = event.target.value;
+    dispatch({
+      type: "set_time",
+      object: {
+        ...state.time,
+        value: value,
+        valid: true,
+      },
+    });
+  };
+
+  const onChangeSize = (event) => {
+    const value = event.target.value;
+    dispatch({
+      type: "set_size",
+      object: {
+        ...state.size,
+        value: value,
+        valid: validateSize(value),
+      },
+    });
+  };
+
+  const onBlurSize = () => {
+    dispatch({
+      type: "set_size",
+      object: {
+        ...state.size,
+        touched: true,
+      },
+    });
+  };
+
+  const onChangeOccasion = (event) => {
+    const value = event.target.value;
+    dispatch({
+      type: "set_occasion",
+      object: {
+        ...state.occasion,
+        value: value,
+        valid: true,
+      },
+    });
+  };
+
+  const onChangeMessage = (event) => {
+    const value = event.target.value;
+    dispatch({
+      type: "set_message",
+      object: {
+        ...state.message,
+        value: value,
+        valid: true,
+      },
+    });
+  };
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    dispatch({ type: "reset", object: null });
   }
-  const validateDate = (date) => {
-    const isValid = validateDateInput(date);
-    setIsDateValid(isValid);
-    return isValid;
-  };
-  const validateSize = (size) => {
-    const isValid = size >= 1 && size <= 10;
-    setIsSizeValid(isValid);
-    return isValid;
-  };
-  const onSelectTime = (time) => {
-    onSlotSelection(time);
-    return true;
-  };
+
   return (
-    <form className="container">
+    <form className="container" onSubmit={handleSubmit}>
       <h2>Make a reservation</h2>
       <InputField
         inputID={"name"}
@@ -45,12 +151,15 @@ export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
         error={
           "Please enter a valid name! The name should contain at least three characters."
         }
-        validate={validateName}
+        showError={state.name.touched && !state.name.valid}
       >
         <input
           id="name"
           type="text"
           placeholder="Full Name"
+          value={state.name.value}
+          onChange={onChangeName}
+          onBlur={onBlurName}
           minLength={3}
           maxLength={50}
         />
@@ -60,9 +169,16 @@ export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
         text={"Email Address"}
         required={true}
         error={"Please enter a valid email address!"}
-        validate={validateEmail}
+        showError={state.email.touched && !state.email.valid}
       >
-        <input id="email" type="email" placeholder="example@example.ca" />
+        <input
+          id="email"
+          type="email"
+          placeholder="example@example.ca"
+          value={state.email.value}
+          onChange={onChangeEmail}
+          onBlur={onBlurEmail}
+        />
       </InputField>
       <InputField
         inputID={"date"}
@@ -71,18 +187,24 @@ export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
         error={
           "Please enter a valid date! We cannot reserve a table for past days or for a day which is not within 7 days from today."
         }
-        validate={validateDate}
+        showError={state.date.touched && !state.date.valid}
       >
-        <input id="date" type="date" />
+        <input
+          id="date"
+          type="date"
+          value={state.date.value}
+          onChange={onChangeDate}
+          onBlur={onBlurDate}
+        />
       </InputField>
       <InputField
         inputID={"time"}
         text={"Time"}
         required={true}
         error={"Please select an available time slot!"}
-        validate={onSelectTime}
+        showError={state.time.touched && !state.time.valid}
       >
-        <select id="time">
+        <select id="time" onChange={onChangeTime}>
           {availableTimes.map((time) => (
             <option key={time} value={time}>
               {time}
@@ -91,24 +213,32 @@ export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
         </select>
       </InputField>
       <InputField
-        inputID={"guests"}
+        inputID={"size"}
         text={"Number of Guests"}
         required={true}
         error={
-          "Number of attendees should be provided! The maximum number of attendees we can accommodate is 10"
+          "Number of guests should be provided! The maximum number of attendees we can accommodate is 10"
         }
-        validate={validateSize}
+        showError={state.size.touched && !state.size.valid}
       >
-        <input id="guests" type="number" min={1} max={10} />
+        <input
+          id="size"
+          type="number"
+          value={state.size.value}
+          onChange={onChangeSize}
+          onBlur={onBlurSize}
+          min={1}
+          max={10}
+        />
       </InputField>
       <InputField
         inputID={"occasion"}
         text={"Occasion"}
         required={true}
         error={null}
-        validate={() => true}
+        showError={state.occasion.touched && !state.occasion.valid}
       >
-        <select id="occasion">
+        <select id="occasion" onChange={onChangeOccasion}>
           <option value="general">General</option>
           <option value="birthday">Birthday</option>
           <option value="anniversary">Anniversary</option>
@@ -119,13 +249,27 @@ export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
         text={"Message"}
         required={false}
         error={null}
-        validate={() => true}
+        showError={state.message.touched && !state.message.valid}
       >
-        <input id="message" type="comment" min={1} max={10} />
+        <input
+          id="message"
+          type="comment"
+          value={state.message.value}
+          onChange={onChangeMessage}
+          min={1}
+          max={10}
+        />
       </InputField>
       <button
         type="submit"
-        disabled={!(isNameValid && isEmailValid && isDateValid && isSizeValid)}
+        disabled={
+          !(
+            state.name.valid &&
+            state.email.valid &&
+            state.date.valid &&
+            state.size.valid
+          )
+        }
       >
         Submit
       </button>
