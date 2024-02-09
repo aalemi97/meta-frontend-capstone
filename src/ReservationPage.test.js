@@ -14,5 +14,7 @@ test("initializeTimes function", () => {
 test("updateTimes function", () => {
   const times = initializeTimes();
   const slot = `${new Date().getHours() + 1}:00`;
-  expect(updateTimes(times, slot));
+  const index = times.indexOf(slot);
+  times.splice(index, 1);
+  expect(updateTimes(initializeTimes(), slot)).toEqual(times);
 });
