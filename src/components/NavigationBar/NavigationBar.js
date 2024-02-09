@@ -7,6 +7,22 @@ import grayLogo from "../../assets/little-lemon-logo-grey.png";
 import { useState } from "react";
 import { HomePage } from "../HomePage";
 import { ReservationPage } from "../Reservation/ReservationPage";
+import { Bars3Icon, XCircleIcon } from "@heroicons/react/24/outline";
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  viewBox="0 0 24 24"
+  strokeWidth={1.5}
+  stroke="currentColor"
+  className="w-6 h-6"
+>
+  <path
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+  />
+</svg>;
 
 const navItems = [
   { title: "Home", ref: "/", element: <HomePage /> },
@@ -33,13 +49,25 @@ function NavigationBar() {
           ))}
         </div>
         <div className="mobile-menu" onClick={() => setShow(!show)}>
-          <img src={show ? closeIcon : menuIcon} alt="Menu" />
+          {show ? (
+            <XCircleIcon className="icon" />
+          ) : (
+            <Bars3Icon className="icon" />
+          )}
+          {/* <img src={show ? closeIcon : menuIcon} alt="Menu" /> */}
         </div>
       </nav>
       {show && (
         <div className="side-bar">
           {navItems.map((item, index) => (
-            <Link to={item.ref} className="nav-item" key={index}>
+            <Link
+              to={item.ref}
+              className="nav-item"
+              key={index}
+              onClick={() => {
+                setShow(false);
+              }}
+            >
               {item.title}
             </Link>
           ))}

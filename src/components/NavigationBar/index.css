@@ -74,6 +74,13 @@ nav img {
   padding-top: -10px;
 }
 
+nav .icon {
+  width: 150px;
+  height: 50px;
+  padding-top: -10px;
+  color: #495e57;
+}
+
 nav a {
   padding-left: 10px;
   text-align: center;
