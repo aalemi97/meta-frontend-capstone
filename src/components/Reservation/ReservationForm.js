@@ -1,146 +1,14 @@
 import { useReducer } from "react";
 import { InputField } from "./InputField";
 import { createInitialState, reducer } from "./FormData.ts";
-import {
-  validateName,
-  validateEmail,
-  validateDate,
-  validateSize,
-} from "../../utilities/utils.ts";
 import "./index.css";
 
 export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
   const [state, dispatch] = useReducer(reducer, createInitialState());
-
-  const onChangeName = (event) => {
-    const value = event.target.value;
-    dispatch({
-      type: "set_name",
-      object: {
-        ...state.name,
-        value: value,
-        valid: validateName(value),
-      },
-    });
-  };
-
-  const onBlurName = () => {
-    dispatch({
-      type: "set_name",
-      object: {
-        ...state.name,
-        touched: true,
-      },
-    });
-  };
-
-  const onChangeEmail = (event) => {
-    const value = event.target.value;
-    dispatch({
-      type: "set_email",
-      object: {
-        ...state.email,
-        value: value,
-        valid: validateEmail(value),
-      },
-    });
-  };
-
-  const onBlurEmail = () => {
-    dispatch({
-      type: "set_email",
-      object: {
-        ...state.email,
-        touched: true,
-      },
-    });
-  };
-
-  const onChangeDate = (event) => {
-    const value = event.target.value;
-    dispatch({
-      type: "set_date",
-      object: {
-        ...state.date,
-        value: value,
-        valid: validateDate(value),
-      },
-    });
-  };
-
-  const onBlurDate = () => {
-    dispatch({
-      type: "set_date",
-      object: {
-        ...state.date,
-        touched: true,
-      },
-    });
-  };
-
-  const onChangeTime = (event) => {
-    const value = event.target.value;
-    dispatch({
-      type: "set_time",
-      object: {
-        ...state.time,
-        value: value,
-        valid: true,
-      },
-    });
-  };
-
-  const onChangeSize = (event) => {
-    const value = event.target.value;
-    dispatch({
-      type: "set_size",
-      object: {
-        ...state.size,
-        value: value,
-        valid: validateSize(value),
-      },
-    });
-  };
-
-  const onBlurSize = () => {
-    dispatch({
-      type: "set_size",
-      object: {
-        ...state.size,
-        touched: true,
-      },
-    });
-  };
-
-  const onChangeOccasion = (event) => {
-    const value = event.target.value;
-    dispatch({
-      type: "set_occasion",
-      object: {
-        ...state.occasion,
-        value: value,
-        valid: true,
-      },
-    });
-  };
-
-  const onChangeMessage = (event) => {
-    const value = event.target.value;
-    dispatch({
-      type: "set_message",
-      object: {
-        ...state.message,
-        value: value,
-        valid: true,
-      },
-    });
-  };
-
   function handleSubmit(event) {
     event.preventDefault();
     dispatch({ type: "reset", object: null });
   }
-
   return (
     <form className="container" onSubmit={handleSubmit}>
       <h2>Make a reservation</h2>
@@ -158,8 +26,10 @@ export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
           type="text"
           placeholder="Full Name"
           value={state.name.value}
-          onChange={onChangeName}
-          onBlur={onBlurName}
+          onChange={(event) => {
+            dispatch({ type: "set_name", value: event.target.value });
+          }}
+          onBlur={() => dispatch({ type: "set_touched", value: "name" })}
           minLength={3}
           maxLength={50}
         />
@@ -176,8 +46,10 @@ export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
           type="email"
           placeholder="example@example.ca"
           value={state.email.value}
-          onChange={onChangeEmail}
-          onBlur={onBlurEmail}
+          onChange={(event) => {
+            dispatch({ type: "set_email", value: event.target.value });
+          }}
+          onBlur={() => dispatch({ type: "set_touched", value: "email" })}
         />
       </InputField>
       <InputField
@@ -193,8 +65,10 @@ export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
           id="date"
           type="date"
           value={state.date.value}
-          onChange={onChangeDate}
-          onBlur={onBlurDate}
+          onChange={(event) => {
+            dispatch({ type: "set_date", value: event.target.value });
+          }}
+          onBlur={() => dispatch({ type: "set_touched", value: "date" })}
         />
       </InputField>
       <InputField
@@ -204,7 +78,12 @@ export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
         error={"Please select an available time slot!"}
         showError={state.time.touched && !state.time.valid}
       >
-        <select id="time" onChange={onChangeTime}>
+        <select
+          id="time"
+          onChange={(event) => {
+            dispatch({ type: "set_time", value: event.target.value });
+          }}
+        >
           {availableTimes.map((time) => (
             <option key={time} value={time}>
               {time}
@@ -225,8 +104,10 @@ export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
           id="size"
           type="number"
           value={state.size.value}
-          onChange={onChangeSize}
-          onBlur={onBlurSize}
+          onChange={(event) => {
+            dispatch({ type: "set_size", value: event.target.value });
+          }}
+          onBlur={() => dispatch({ type: "set_touched", value: "size" })}
           min={1}
           max={10}
         />
@@ -238,7 +119,12 @@ export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
         error={null}
         showError={state.occasion.touched && !state.occasion.valid}
       >
-        <select id="occasion" onChange={onChangeOccasion}>
+        <select
+          id="occasion"
+          onChange={(event) => {
+            dispatch({ type: "set_occasion", value: event.target.value });
+          }}
+        >
           <option value="general">General</option>
           <option value="birthday">Birthday</option>
           <option value="anniversary">Anniversary</option>
@@ -255,7 +141,9 @@ export const ReservationForm = ({ availableTimes, onSlotSelection }) => {
           id="message"
           type="comment"
           value={state.message.value}
-          onChange={onChangeMessage}
+          onChange={(event) => {
+            dispatch({ type: "set_message", value: event.target.value });
+          }}
           min={1}
           max={10}
         />
